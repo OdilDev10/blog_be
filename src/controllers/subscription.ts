@@ -23,7 +23,7 @@ export const postSubscriptionsCtrl = async (req: Request, res: Response) => {
     const subscription = await postOneSubscription(body);
     res.status(200).send(subscription);
   } catch (error) {
-    handleHttp(res, `${error}`, "ERROR_UPDATING_SUBSCRIPTIONS");
+    handleHttp(res, `${error}`, "ERROR_CREATING_SUBSCRIPTIONS");
   }
 };
 

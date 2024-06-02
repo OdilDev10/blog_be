@@ -6,6 +6,12 @@ import {
   postPaymentsCtrl,
   updatePaymentsCtrl,
 } from "../controllers/payments";
+import {
+  RoleValidAdmin,
+  RoleValidClientOrUser,
+  RoleValidStaff,
+} from "../middlewares/role_valid";
+import { checkJwt } from "../middlewares/session_middleware";
 
 const payments_router = Router();
 
@@ -45,7 +51,7 @@ const payments_router = Router();
  *                           - Completed
  *                           - Failed
  */
-payments_router.get("/payments", getAllPaymentsCtrl);
+payments_router.get("/payments", checkJwt, RoleValidStaff, getAllPaymentsCtrl);
 
 /**
  * @swagger
@@ -86,7 +92,12 @@ payments_router.get("/payments", getAllPaymentsCtrl);
  *                           - Completed
  *                           - Failed
  */
-payments_router.get("/payments/:id", getOnePaymentsCtrl);
+payments_router.get(
+  "/payments/:id",
+  checkJwt,
+  RoleValidStaff,
+  getOnePaymentsCtrl
+);
 
 /**
  * @swagger
@@ -124,7 +135,12 @@ payments_router.get("/payments/:id", getOnePaymentsCtrl);
  *                           - Completed
  *                           - Failed
  */
-payments_router.post("/payments", postPaymentsCtrl);
+payments_router.post(
+  "/payments",
+  checkJwt,
+  RoleValidClientOrUser,
+  postPaymentsCtrl
+);
 
 /**
  * @swagger
@@ -162,7 +178,12 @@ payments_router.post("/payments", postPaymentsCtrl);
  *                           - Completed
  *                           - Failed
  */
-payments_router.put("/payments/:id", updatePaymentsCtrl);
+payments_router.put(
+  "/payments/:id",
+  checkJwt,
+  RoleValidClientOrUser,
+  updatePaymentsCtrl
+);
 
 /**
  * @swagger
@@ -187,6 +208,11 @@ payments_router.put("/payments/:id", updatePaymentsCtrl);
  *                 id:
  *                   type: string
  */
-payments_router.delete("/payments/:id", deletePaymentsCtrl);
+payments_router.delete(
+  "/payments/:id",
+  checkJwt,
+  RoleValidClientOrUser,
+  deletePaymentsCtrl
+);
 
 export default payments_router;

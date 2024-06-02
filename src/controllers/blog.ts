@@ -7,8 +7,9 @@ import {
   updateBlog,
   deleteBlog,
 } from "../services/blog";
+import RequestExtendida from "../interfaces/request_extendida";
 
-export const getAllBlogsCtrl = async (req: Request, res: Response) => {
+export const getAllBlogsCtrl = async (req: RequestExtendida, res: Response) => {
   try {
     const blogs = await getAllBlogs();
     res.status(200).send(blogs);
@@ -17,17 +18,17 @@ export const getAllBlogsCtrl = async (req: Request, res: Response) => {
   }
 };
 
-export const postBlogsCtrl = async (req: Request, res: Response) => {
+export const postBlogsCtrl = async (req: RequestExtendida, res: Response) => {
   try {
     const body = req.body;
     const blog = await postOneBlog(body);
     res.status(200).send(blog);
   } catch (error) {
-    handleHttp(res, `${error}`, "ERROR_UPDATING_BLOGS");
+    handleHttp(res, `${error}`, "ERROR_CREATING_BLOGS");
   }
 };
 
-export const getOneBlogsCtrl = async (req: Request, res: Response) => {
+export const getOneBlogsCtrl = async (req: RequestExtendida, res: Response) => {
   try {
     const { id } = req.params;
     const blog = await getOneBlog(id);
@@ -37,7 +38,7 @@ export const getOneBlogsCtrl = async (req: Request, res: Response) => {
   }
 };
 
-export const updateBlogsCtrl = async (req: Request, res: Response) => {
+export const updateBlogsCtrl = async (req: RequestExtendida, res: Response) => {
   try {
     const { id } = req.params;
     const body = req.body;
@@ -48,7 +49,7 @@ export const updateBlogsCtrl = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteBlogsCtrl = async (req: Request, res: Response) => {
+export const deleteBlogsCtrl = async (req: RequestExtendida, res: Response) => {
   try {
     const { id } = req.params;
     const blogs = await deleteBlog(id);

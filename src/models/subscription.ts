@@ -5,7 +5,6 @@ const SubscriptionSchema = new Schema<Subscription>(
   {
     plan: { type: Schema.Types.ObjectId, ref: "Plan", required: true },
     subscriber: { type: Schema.Types.ObjectId, required: true },
-    subscriberType: { type: String, required: true, enum: ["User", "Client"] },
     blog: { type: Schema.Types.ObjectId, ref: "User", required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },

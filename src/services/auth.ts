@@ -9,10 +9,13 @@ export const registerUser = async (data: User) => {
     return "ALLREADY_USER";
   }
 
+  console.log(data, "data");
+
   const registerNewUser = await UserModel.create({
     email: data.email,
     password: await encrypt(data.password),
     name: data.name,
+    role: data.role,
   });
 
   return registerNewUser;
@@ -31,5 +34,5 @@ export const loginUser = async (data: User) => {
     token,
     user: checkIs,
   };
-  return reponse
+  return reponse;
 };

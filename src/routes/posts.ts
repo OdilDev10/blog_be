@@ -6,6 +6,8 @@ import {
   postPostsCtrl,
   updatePostsCtrl,
 } from "../controllers/posts";
+import { checkJwt } from "../middlewares/session_middleware";
+import { RoleValidStaffOrUser, RoleValidUser } from "../middlewares/role_valid";
 
 const posts_router = Router();
 /**
@@ -53,7 +55,7 @@ const posts_router = Router();
  *                   - author
  *                   - published
  */
-posts_router.get("/posts", getAllPostsCtrl);
+posts_router.get("/posts", checkJwt, RoleValidStaffOrUser, getAllPostsCtrl);
 
 /**
  * @swagger
@@ -98,7 +100,7 @@ posts_router.get("/posts", getAllPostsCtrl);
  *                     items:
  *                       type: string
  */
-posts_router.get("/posts/:id", getOnePostsCtrl);
+posts_router.get("/posts/:id", checkJwt, RoleValidStaffOrUser, getOnePostsCtrl);
 
 /**
  * @swagger
@@ -132,7 +134,7 @@ posts_router.get("/posts/:id", getOnePostsCtrl);
  *               published:
  *                 type: boolean
  */
-posts_router.post("/posts", postPostsCtrl);
+posts_router.post("/posts", checkJwt, RoleValidUser, postPostsCtrl);
 
 /**
  * @swagger
@@ -166,7 +168,7 @@ posts_router.post("/posts", postPostsCtrl);
  *               published:
  *                 type: boolean
  */
-posts_router.put("/posts/:id", updatePostsCtrl);
+posts_router.put("/posts/:id", checkJwt, RoleValidUser, updatePostsCtrl);
 
 /**
  * @swagger
@@ -191,6 +193,6 @@ posts_router.put("/posts/:id", updatePostsCtrl);
  *                 id:
  *                   type: string
  */
-posts_router.delete("/posts/:id", deletePostsCtrl);
+posts_router.delete("/posts/:id", checkJwt, RoleValidUser, deletePostsCtrl);
 
 export default posts_router;

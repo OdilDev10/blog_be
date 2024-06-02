@@ -1,6 +1,7 @@
 import { Schema, model } from "mongoose";
 import User from "../interfaces/user_interface";
 import CardSchema from "./cards";
+import RoleEnum from "../enums/role_enum";
 
 const UserSchema = new Schema<User>(
   {
@@ -17,6 +18,7 @@ const UserSchema = new Schema<User>(
       type: String,
       required: true,
     },
+    role: { type: String, required: true, enum: RoleEnum },
     photos: { type: [String], required: true },
     disabled: { type: Boolean, default: false },
     deleted: { type: Boolean, default: false },

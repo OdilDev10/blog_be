@@ -7,5 +7,4 @@ export default interface Cards extends StatusModel {
   cardNumber: string;
   code: number;
   expiryDate: string;
-  subscriberType: "User" | "Client";
 }

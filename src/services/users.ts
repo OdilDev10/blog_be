@@ -13,9 +13,22 @@ export const getOneUser = async (id: string | ObjectId) => {
 };
 
 export const updateUser = async (id: string | ObjectId, data: User) => {
-  const users = await UserModel.findOneAndUpdate({ _id: id }, data, {
-    new: true,
-  });
+  const users = await UserModel.findOneAndUpdate(
+    { _id: id },
+    {
+      email: data.email,
+      name: data.name,
+      password: data.password,
+      photos: data.photos,
+      role: data.role,
+      disabled: data.disabled,
+      deleted: data.deleted,
+      deleted_at: data.deleted_at,
+    },
+    {
+      new: true,
+    }
+  );
   return users;
 };
 

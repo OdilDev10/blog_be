@@ -6,6 +6,8 @@ import {
   updatePlansCtrl,
   deletePlansCtrl,
 } from "../controllers/plan";
+import { checkJwt } from "../middlewares/session_middleware";
+import { RoleValidAdmin, RoleValidUser } from "../middlewares/role_valid";
 
 const plans_router = Router();
 
@@ -39,7 +41,7 @@ const plans_router = Router();
  *                   status:  # Assuming 'status' is a property inherited from StatusModel
  *                     type: string
  */
-plans_router.get("/plans", getAllPlansCtrl);
+plans_router.get("/plans", checkJwt, getAllPlansCtrl);
 
 /**
  * @swagger
@@ -74,7 +76,7 @@ plans_router.get("/plans", getAllPlansCtrl);
  *                 status:  # Assuming 'status' is a property inherited from StatusModel
  *                     type: string
  */
-plans_router.get("/plans/:id", getOnePlansCtrl);
+plans_router.get("/plans/:id", checkJwt, getOnePlansCtrl);
 
 /**
  * @swagger
@@ -104,7 +106,7 @@ plans_router.get("/plans/:id", getOnePlansCtrl);
  *               duration:  # Assuming 'duration' is a property in number of days
  *                 type: number
  */
-plans_router.post("/plans", postPlansCtrl);
+plans_router.post("/plans", checkJwt, RoleValidUser, postPlansCtrl);
 
 /**
  * @swagger
@@ -134,7 +136,7 @@ plans_router.post("/plans", postPlansCtrl);
  *               duration:  # Assuming 'duration' is a property in number of days
  *                 type: number
  */
-plans_router.put("/plans/:id", updatePlansCtrl);
+plans_router.put("/plans/:id", checkJwt, RoleValidUser, updatePlansCtrl);
 
 /**
  * @swagger
@@ -159,5 +161,5 @@ plans_router.put("/plans/:id", updatePlansCtrl);
  *                 id:
  *                   type: string
  */
-plans_router.delete("/plans/:id", deletePlansCtrl);
+plans_router.delete("/plans/:id", checkJwt, RoleValidUser, deletePlansCtrl);
 export default plans_router;

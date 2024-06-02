@@ -6,6 +6,10 @@ import {
   postCardsCtrl,
   updateCardsCtrl,
 } from "../controllers/cards";
+import {
+  RoleValidClientOrUser,
+  RoleValidStaff
+} from "../middlewares/role_valid";
 import { checkJwt } from "../middlewares/session_middleware";
 
 const cards_router = Router();
@@ -44,7 +48,7 @@ const cards_router = Router();
  *                   subscriberType:
  *                     type: string
  */
-cards_router.get("/cards", checkJwt, getAllCardsCtrl);
+cards_router.get("/cards", checkJwt, RoleValidStaff, getAllCardsCtrl);
 
 /**
  * @swagger
@@ -84,7 +88,11 @@ cards_router.get("/cards", checkJwt, getAllCardsCtrl);
  *                 subscriberType:
  *                   type: string
  */
-cards_router.get("/cards/:id", checkJwt, getOneCardsCtrl);
+cards_router.get(
+  "/cards/:id",
+  checkJwt,
+  getOneCardsCtrl
+);
 
 /**
  * @swagger
@@ -125,7 +133,7 @@ cards_router.get("/cards/:id", checkJwt, getOneCardsCtrl);
  *                 id:
  *                   type: string
  */
-cards_router.post("/cards", checkJwt, postCardsCtrl);
+cards_router.post("/cards", checkJwt, RoleValidClientOrUser, postCardsCtrl);
 
 /**
  * @swagger
@@ -170,7 +178,12 @@ cards_router.post("/cards", checkJwt, postCardsCtrl);
  *                 id:
  *                   type: string
  */
-cards_router.put("/cards/:id", checkJwt, updateCardsCtrl);
+cards_router.put(
+  "/cards/:id",
+  checkJwt,
+  RoleValidClientOrUser,
+  updateCardsCtrl
+);
 
 /**
  * @swagger
@@ -198,6 +211,11 @@ cards_router.put("/cards/:id", checkJwt, updateCardsCtrl);
  *                 id:
  *                   type: string
  */
-cards_router.delete("/cards/:id", checkJwt, deleteCardsCtrl);
+cards_router.delete(
+  "/cards/:id",
+  checkJwt,
+  RoleValidClientOrUser,
+  deleteCardsCtrl
+);
 
 export default cards_router;

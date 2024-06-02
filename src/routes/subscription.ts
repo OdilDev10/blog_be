@@ -6,6 +6,8 @@ import {
   updateSubscriptionsCtrl,
   deleteSubscriptionsCtrl,
 } from "../controllers/subscription";
+import { checkJwt } from "../middlewares/session_middleware";
+import { RoleValidClient } from "../middlewares/role_valid";
 
 const subscriptions_router = Router();
 /**
@@ -47,7 +49,12 @@ const subscriptions_router = Router();
  *                   status:  # Assuming 'status' is a property inherited from StatusModel
  *                     type: string
  */
-subscriptions_router.get("/subscriptions", getAllSubscriptionsCtrl);
+subscriptions_router.get(
+  "/subscriptions",
+  checkJwt,
+  RoleValidClient,
+  getAllSubscriptionsCtrl
+);
 
 /**
  * @swagger
@@ -91,7 +98,12 @@ subscriptions_router.get("/subscriptions", getAllSubscriptionsCtrl);
  *                 status:  # Assuming 'status' is a property inherited from StatusModel
  *                     type: string
  */
-subscriptions_router.get("/subscriptions/:id", getOneSubscriptionsCtrl);
+subscriptions_router.get(
+  "/subscriptions/:id",
+  checkJwt,
+  RoleValidClient,
+  getOneSubscriptionsCtrl
+);
 
 /**
  * @swagger
@@ -132,7 +144,12 @@ subscriptions_router.get("/subscriptions/:id", getOneSubscriptionsCtrl);
  *               active:
  *                 type: boolean
  */
-subscriptions_router.post("/subscriptions", postSubscriptionsCtrl);
+subscriptions_router.post(
+  "/subscriptions",
+  checkJwt,
+  RoleValidClient,
+  postSubscriptionsCtrl
+);
 
 /**
  * @swagger
@@ -171,7 +188,12 @@ subscriptions_router.post("/subscriptions", postSubscriptionsCtrl);
  *               active:
  *                 type: boolean
  */
-subscriptions_router.put("/subscriptions/:id", updateSubscriptionsCtrl);
+subscriptions_router.put(
+  "/subscriptions/:id",
+  checkJwt,
+  RoleValidClient,
+  updateSubscriptionsCtrl
+);
 
 /**
  * @swagger
@@ -196,6 +218,11 @@ subscriptions_router.put("/subscriptions/:id", updateSubscriptionsCtrl);
  *                 id:
  *                   type: string
  */
-subscriptions_router.delete("/subscriptions/:id", deleteSubscriptionsCtrl);
+subscriptions_router.delete(
+  "/subscriptions/:id",
+  checkJwt,
+  RoleValidClient,
+  deleteSubscriptionsCtrl
+);
 
 export default subscriptions_router;

@@ -23,7 +23,7 @@ export const postCardsCtrl = async (req: Request, res: Response) => {
     const card = await postOneCard(body);
     res.status(200).send(card);
   } catch (error) {
-    handleHttp(res, `${error}`, "ERROR_UPDATING_CARDS");
+    handleHttp(res, `${error}`, "ERROR_CREATING_CARDS");
   }
 };
 

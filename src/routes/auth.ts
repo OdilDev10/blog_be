@@ -3,7 +3,6 @@ import { loginCtrl, registerCtrl } from "../controllers/auth";
 import logMiddleware from "../middlewares/log_middleware";
 
 const auth_router = Router();
-
 /**
  * @swagger
  * /auth/register:
@@ -26,6 +25,13 @@ const auth_router = Router();
  *                 type: string
  *               description:
  *                 type: string
+ *               role:
+ *                 type: string
+ *                 enum:
+ *                   - Admin
+ *                   - User
+ *                   - Client
+ *                   - Guest
  *     responses:
  *       201:
  *         description: Registro exitoso
@@ -44,7 +50,13 @@ const auth_router = Router();
  *                   type: string
  *                 description:
  *                   type: string
- *
+ *                 role:
+ *                   type: string
+ *                   enum:
+ *                     - Admin
+ *                     - User
+ *                     - Client
+ *                     - Guest
  */
 auth_router.post("/auth/register", logMiddleware, registerCtrl);
 

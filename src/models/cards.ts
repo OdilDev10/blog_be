@@ -3,7 +3,6 @@ import Cards from "../interfaces/cards_interfaces";
 
 const CardSchema = new Schema<Cards>({
   subscriber: { type: Schema.Types.ObjectId, required: true },
-  subscriberType: { type: String, required: true, enum: ["User", "Client"] },
   cardNumber: { type: String, required: true },
   expiryDate: { type: String, required: true },
   cardHolderName: { type: String, required: true },

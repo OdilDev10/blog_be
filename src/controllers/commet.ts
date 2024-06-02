@@ -23,7 +23,7 @@ export const postCommentsCtrl = async (req: Request, res: Response) => {
     const comment = await postOneComment(body);
     res.status(200).send(comment);
   } catch (error) {
-    handleHttp(res, `${error}`, "ERROR_UPDATING_COMMENTS");
+    handleHttp(res, `${error}`, "ERROR_CREATING_COMMENTS");
   }
 };
 

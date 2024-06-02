@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import {
   deleteUsersCtrl,
   getAllUsersCtrl,
@@ -6,6 +6,8 @@ import {
   updateUsersCtrl,
 } from "../controllers/users";
 import { checkJwt } from "../middlewares/session_middleware";
+import logMiddleware from "../middlewares/log_middleware";
+import { RoleValidStaff } from "../middlewares/role_valid";
 
 const users_router = Router();
 
@@ -31,7 +33,7 @@ const users_router = Router();
  *                   id:
  *                     type: string
  */
-users_router.get("/users", checkJwt, getAllUsersCtrl);
+users_router.get("/users", checkJwt, RoleValidStaff, getAllUsersCtrl);
 
 /**
  * @swagger
@@ -59,7 +61,7 @@ users_router.get("/users", checkJwt, getAllUsersCtrl);
  *                 id:
  *                   type: string
  */
-users_router.get("/users/:id", checkJwt, getOneUsersCtrl);
+users_router.get("/users/:id", checkJwt, RoleValidStaff, getOneUsersCtrl);
 
 /**
  * @swagger
@@ -100,7 +102,7 @@ users_router.get("/users/:id", checkJwt, getOneUsersCtrl);
  *                 id:
  *                   type: string
  */
-users_router.put("/users/:id", checkJwt, updateUsersCtrl);
+users_router.put("/users/:id", checkJwt, RoleValidStaff, updateUsersCtrl);
 
 /**
  * @swagger
@@ -128,6 +130,6 @@ users_router.put("/users/:id", checkJwt, updateUsersCtrl);
  *                 id:
  *                   type: string
  */
-users_router.delete("/users/:id", checkJwt, deleteUsersCtrl);
+users_router.delete("/users/:id", checkJwt, RoleValidStaff, deleteUsersCtrl);
 
 export default users_router;

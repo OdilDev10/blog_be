@@ -4,7 +4,6 @@ import morgan from "morgan";
 import cors from "cors";
 import db from "./config/mongo";
 import swaggerSetup from "./config/swagger";
-import clients_router from "./routes/clients";
 import users_router from "./routes/users";
 import payments_router from "./routes/payments";
 import posts_router from "./routes/posts";
@@ -23,7 +22,6 @@ app.use(json());
 app.use(morgan("dev"));
 
 app.use(auth_router);
-app.use(clients_router);
 app.use(users_router);
 app.use(payments_router);
 app.use(posts_router);

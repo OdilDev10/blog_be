@@ -23,7 +23,7 @@ export const postPostsCtrl = async (req: Request, res: Response) => {
     const post = await postOnePost(body);
     res.status(200).send(post);
   } catch (error) {
-    handleHttp(res, `${error}`, "ERROR_UPDATING_POSTS");
+    handleHttp(res, `${error}`, "ERROR_CREATING_POSTS");
   }
 };
 

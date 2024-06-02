@@ -4,7 +4,6 @@ import StatusModel from "./status_models_interface";
 export interface Subscription extends StatusModel{
   plan: string | ObjectId;
   subscriber: string | ObjectId;
-  subscriberType: "User" | "Client";
   blog: string | ObjectId; // The user who owns the blog
   startDate: Date;
   endDate: Date;

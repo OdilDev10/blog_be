@@ -23,7 +23,7 @@ export const postPaymentsCtrl = async (req: Request, res: Response) => {
     const payment = await postOnePayment(body);
     res.status(200).send(payment);
   } catch (error) {
-    handleHttp(res, `${error}`, "ERROR_UPDATING_PAYMENTS");
+    handleHttp(res, `${error}`, "ERROR_CREATING_PAYMENTS");
   }
 };
 

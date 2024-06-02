@@ -23,7 +23,7 @@ export const postPlansCtrl = async (req: Request, res: Response) => {
     const plan = await postOnePlan(body);
     res.status(200).send(plan);
   } catch (error) {
-    handleHttp(res, `${error}`, "ERROR_UPDATING_PLANS");
+    handleHttp(res, `${error}`, "ERROR_CREATING_PLANS");
   }
 };
 

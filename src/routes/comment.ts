@@ -1,11 +1,17 @@
 import { Router } from "express";
 import {
+  deleteCommentsCtrl,
   getAllCommentsCtrl,
   getOneCommentsCtrl,
   postCommentsCtrl,
   updateCommentsCtrl,
-  deleteCommentsCtrl,
 } from "../controllers/commet";
+import {
+  RoleValidAdmin,
+  RoleValidClientOrUser,
+  RoleValidStaffOrUser,
+} from "../middlewares/role_valid";
+import { checkJwt } from "../middlewares/session_middleware";
 
 const comments_router = Router();
 
@@ -41,7 +47,12 @@ const comments_router = Router();
  *                   status:  # Assuming 'status' is a property inherited from StatusModel
  *                     type: string
  */
-comments_router.get("/comments", getAllCommentsCtrl);
+comments_router.get(
+  "/comments",
+  checkJwt,
+  RoleValidStaffOrUser,
+  getAllCommentsCtrl
+);
 
 /**
  * @swagger
@@ -78,7 +89,12 @@ comments_router.get("/comments", getAllCommentsCtrl);
  *                 status:  # Assuming 'status' is a property inherited from StatusModel
  *                     type: string
  */
-comments_router.get("/comments/:id", getOneCommentsCtrl);
+comments_router.get(
+  "/comments/:id",
+  checkJwt,
+  RoleValidStaffOrUser,
+  getOneCommentsCtrl
+);
 
 /**
  * @swagger
@@ -111,7 +127,12 @@ comments_router.get("/comments/:id", getOneCommentsCtrl);
  *               authorType:
  *                 type: string
  */
-comments_router.post("/comments", postCommentsCtrl);
+comments_router.post(
+  "/comments",
+  checkJwt,
+  RoleValidClientOrUser,
+  postCommentsCtrl
+);
 
 /**
  * @swagger
@@ -143,7 +164,12 @@ comments_router.post("/comments", postCommentsCtrl);
  *               authorType:
  *                 type: string
  */
-comments_router.put("/comments/:id", updateCommentsCtrl);
+comments_router.put(
+  "/comments/:id",
+  checkJwt,
+  RoleValidClientOrUser,
+  updateCommentsCtrl
+);
 
 /**
  * @swagger
@@ -168,6 +194,11 @@ comments_router.put("/comments/:id", updateCommentsCtrl);
  *                 id:
  *                   type: string
  */
-comments_router.delete("/comments/:id", deleteCommentsCtrl);
+comments_router.delete(
+  "/comments/:id",
+  checkJwt,
+  RoleValidClientOrUser,
+  deleteCommentsCtrl
+);
 
 export default comments_router;

@@ -1,6 +1,5 @@
 import { Router } from "express";
 
-import { checkJwt } from "../middlewares/session_middleware";
 import {
   deleteBlogsCtrl,
   getAllBlogsCtrl,
@@ -8,6 +7,8 @@ import {
   postBlogsCtrl,
   updateBlogsCtrl,
 } from "../controllers/blog";
+import { RoleValidUser } from "../middlewares/role_valid";
+import { checkJwt } from "../middlewares/session_middleware";
 
 const blogs_router = Router();
 
@@ -128,7 +129,7 @@ blogs_router.get("/blogs/:id", checkJwt, getOneBlogsCtrl);
  *                 id:
  *                   type: string
  */
-blogs_router.post("/blogs", checkJwt, postBlogsCtrl);
+blogs_router.post("/blogs", checkJwt, RoleValidUser, postBlogsCtrl);
 
 /**
  * @swagger
@@ -171,7 +172,7 @@ blogs_router.post("/blogs", checkJwt, postBlogsCtrl);
  *                 id:
  *                   type: string
  */
-blogs_router.put("/blogs/:id", checkJwt, updateBlogsCtrl);
+blogs_router.put("/blogs/:id", checkJwt, RoleValidUser, updateBlogsCtrl);
 
 /**
  * @swagger
@@ -199,6 +200,6 @@ blogs_router.put("/blogs/:id", checkJwt, updateBlogsCtrl);
  *                 id:
  *                   type: string
  */
-blogs_router.delete("/blogs/:id", checkJwt, deleteBlogsCtrl);
+blogs_router.delete("/blogs/:id", checkJwt, RoleValidUser, deleteBlogsCtrl);
 
 export default blogs_router;
