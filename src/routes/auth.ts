@@ -2,7 +2,7 @@ import { Router } from "express";
 import { loginCtrl, registerCtrl } from "../controllers/auth";
 import logMiddleware from "../middlewares/log_middleware";
 
-const router = Router();
+const auth_router = Router();
 
 /**
  * @swagger
@@ -46,7 +46,7 @@ const router = Router();
  *                   type: string
  *
  */
-router.post("/register", logMiddleware, registerCtrl);
+auth_router.post("/auth/register", logMiddleware, registerCtrl);
 
 /**
  * @swagger
@@ -77,6 +77,6 @@ router.post("/register", logMiddleware, registerCtrl);
  *                 token:
  *                   type: string
  */
-router.post("/login", logMiddleware, loginCtrl);
+auth_router.post("/auth/login", logMiddleware, loginCtrl);
 
-export { router };
+export default auth_router;

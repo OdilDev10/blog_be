@@ -5,6 +5,7 @@ import {
   getOneUsersCtrl,
   updateUsersCtrl,
 } from "../controllers/users";
+import { checkJwt } from "../middlewares/session_middleware";
 
 const users_router = Router();
 
@@ -15,6 +16,8 @@ const users_router = Router();
  *     tags:
  *       - USERS
  *     summary: Get all users
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: List of users
@@ -28,7 +31,7 @@ const users_router = Router();
  *                   id:
  *                     type: string
  */
-users_router.get("/users", getAllUsersCtrl);
+users_router.get("/users", checkJwt, getAllUsersCtrl);
 
 /**
  * @swagger
@@ -36,21 +39,27 @@ users_router.get("/users", getAllUsersCtrl);
  *   get:
  *     tags:
  *       - USERS
- *     summary: Get one users
+ *     summary: Get one user
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: One users
+ *         description: One user
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: string
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
  */
-users_router.get("/users/:id", getOneUsersCtrl);
+users_router.get("/users/:id", checkJwt, getOneUsersCtrl);
 
 /**
  * @swagger
@@ -58,21 +67,40 @@ users_router.get("/users/:id", getOneUsersCtrl);
  *   put:
  *     tags:
  *       - USERS
- *     summary: Update users
+ *     summary: Update user
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
  *     responses:
  *       200:
- *         description: Update users
+ *         description: Update user
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: string
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
  */
-users_router.put("/users/:id", updateUsersCtrl);
+users_router.put("/users/:id", checkJwt, updateUsersCtrl);
 
 /**
  * @swagger
@@ -80,20 +108,26 @@ users_router.put("/users/:id", updateUsersCtrl);
  *   delete:
  *     tags:
  *       - USERS
- *     summary: Delete users
+ *     summary: Delete user
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Delete users
+ *         description: Delete user
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
- *                     type: string
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
  */
-users_router.delete("/users/:id", deleteUsersCtrl);
+users_router.delete("/users/:id", checkJwt, deleteUsersCtrl);
 
 export default users_router;

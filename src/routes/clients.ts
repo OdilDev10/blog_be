@@ -6,9 +6,9 @@ import {
   postClientsCtrl,
   updateClientsCtrl,
 } from "../controllers/clients";
+import { checkJwt } from "../middlewares/session_middleware";
 
 const clients_router = Router();
-
 /**
  * @swagger
  * /clients:
@@ -16,6 +16,8 @@ const clients_router = Router();
  *     tags:
  *       - CLIENTS
  *     summary: Get all clients
+ *     security:
+ *       - BearerAuth: []
  *     responses:
  *       200:
  *         description: List of clients
@@ -28,8 +30,23 @@ const clients_router = Router();
  *                 properties:
  *                   id:
  *                     type: string
+ *                   name:
+ *                     type: string
+ *                   email:
+ *                     type: string
+ *                   photos:
+ *                     type: array
+ *                     items:
+ *                       type: string
+ *                   disabled:
+ *                     type: boolean
+ *                   deleted:
+ *                     type: boolean
+ *                   deletedAt:
+ *                     type: string
+ *                     format: date-time
  */
-clients_router.get("/clients", getAllClientsCtrl);
+clients_router.get("/clients", checkJwt, getAllClientsCtrl);
 
 /**
  * @swagger
@@ -37,21 +54,42 @@ clients_router.get("/clients", getAllClientsCtrl);
  *   get:
  *     tags:
  *       - CLIENTS
- *     summary: Get one clients
+ *     summary: Get one client
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: One clients
+ *         description: One client
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 photos:
+ *                   type: array
+ *                   items:
  *                     type: string
+ *                 disabled:
+ *                   type: boolean
+ *                 deleted:
+ *                   type: boolean
+ *                 deletedAt:
+ *                   type: string
+ *                   format: date-time
  */
-clients_router.get("/clients/:id", getOneClientsCtrl);
+clients_router.get("/clients/:id", checkJwt, getOneClientsCtrl);
 
 /**
  * @swagger
@@ -59,21 +97,53 @@ clients_router.get("/clients/:id", getOneClientsCtrl);
  *   post:
  *     tags:
  *       - CLIENTS
- *     summary: Create clients
+ *     summary: Create a client
+ *     security:
+ *       - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               photos:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *     responses:
- *       200:
- *         description: Create clients
+ *       201:
+ *         description: Client created
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 photos:
+ *                   type: array
+ *                   items:
  *                     type: string
+ *                 disabled:
+ *                   type: boolean
+ *                 deleted:
+ *                   type: boolean
+ *                 deletedAt:
+ *                   type: string
+ *                   format: date-time
  */
-clients_router.post("/clients", postClientsCtrl);
+clients_router.post("/clients", checkJwt, postClientsCtrl);
 
 /**
  * @swagger
@@ -81,21 +151,59 @@ clients_router.post("/clients", postClientsCtrl);
  *   put:
  *     tags:
  *       - CLIENTS
- *     summary: Update clients
+ *     summary: Update a client
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               photos:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *     responses:
  *       200:
- *         description: Update clients
+ *         description: Client updated
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 photos:
+ *                   type: array
+ *                   items:
  *                     type: string
+ *                 disabled:
+ *                   type: boolean
+ *                 deleted:
+ *                   type: boolean
+ *                 deletedAt:
+ *                   type: string
+ *                   format: date-time
  */
-clients_router.put("/clients/:id", updateClientsCtrl);
+clients_router.put("/clients/:id", checkJwt, updateClientsCtrl);
 
 /**
  * @swagger
@@ -103,19 +211,41 @@ clients_router.put("/clients/:id", updateClientsCtrl);
  *   delete:
  *     tags:
  *       - CLIENTS
- *     summary: Delete clients
+ *     summary: Delete a client
+ *     security:
+ *       - BearerAuth: []
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Delete clients
+ *         description: Client deleted
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   id:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                 name:
+ *                   type: string
+ *                 email:
+ *                   type: string
+ *                 photos:
+ *                   type: array
+ *                   items:
  *                     type: string
+ *                 disabled:
+ *                   type: boolean
+ *                 deleted:
+ *                   type: boolean
+ *                 deletedAt:
+ *                   type: string
+ *                   format: date-time
  */
-clients_router.delete("/clients/:id", deleteClientsCtrl);
+clients_router.delete("/clients/:id", checkJwt, deleteClientsCtrl);
+
 export default clients_router;
